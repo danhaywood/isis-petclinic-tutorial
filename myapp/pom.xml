@@ -176,6 +176,11 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.isisaddons.metamodel.paraname8</groupId>
+            <artifactId>isis-metamodel-paraname8-dom</artifactId>
+            <version>1.16.2</version>
+        </dependency>
     </dependencies>
 
     <profiles>
