@@ -55,7 +55,7 @@ public class Owner implements Comparable<Owner> {
     }
 
     @javax.jdo.annotations.Column(allowsNull = "false", length = 40)
-    @Property(editing = Editing.DISABLED)
+    @Property
     @Title(prepend = "Object: ")
     @Getter @Setter
     private String name;
