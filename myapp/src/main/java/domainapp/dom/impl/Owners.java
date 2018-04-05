@@ -42,8 +42,10 @@ public class Owners {
     @MemberOrder(sequence = "1")
     public Owner create(
             @Parameter(maxLength = 40)
-            final String name) {
-        return repositoryService.persist(new Owner(name));
+            final String lastName,
+            @Parameter(maxLength = 40)
+            final String firstName) {
+        return repositoryService.persist(new Owner(lastName, firstName));
     }
 
     @Action(semantics = SemanticsOf.SAFE)
@@ -53,7 +55,9 @@ public class Owners {
         TypesafeQuery<Owner> q = isisJdoSupport.newTypesafeQuery(Owner.class);
         final QOwner cand = QOwner.candidate();
         q = q.filter(
-                cand.name.indexOf(q.stringParameter("name")).ne(-1)
+                cand.lastName.indexOf(q.stringParameter("name")).ne(-1).or(
+                cand.firstName.indexOf(q.stringParameter("name")).ne(-1)
+                )
         );
         return q.setParameter("name", name)
                 .executeList();
