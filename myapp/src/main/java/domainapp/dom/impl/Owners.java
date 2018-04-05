@@ -27,7 +27,6 @@ import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Parameter;
-import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
@@ -43,7 +42,6 @@ public class Owners {
     @MemberOrder(sequence = "1")
     public Owner create(
             @Parameter(maxLength = 40)
-            @ParameterLayout(named = "Name")
             final String name) {
         return repositoryService.persist(new Owner(name));
     }
@@ -51,7 +49,6 @@ public class Owners {
     @Action(semantics = SemanticsOf.SAFE)
     @MemberOrder(sequence = "2")
     public List<Owner> findByName(
-            @ParameterLayout(named = "Name")
             final String name) {
         TypesafeQuery<Owner> q = isisJdoSupport.newTypesafeQuery(Owner.class);
         final QOwner cand = QOwner.candidate();
