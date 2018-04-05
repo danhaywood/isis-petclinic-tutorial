@@ -27,14 +27,16 @@ public class OwnerTest_updateName {
     @Test
     public void happy_case() throws Exception {
         // given
-        final Owner object = new Owner("Foo");
-        assertThat(object.getName()).isEqualTo("Foo");
+        final Owner object = new Owner("Smith", "John");
+        assertThat(object.getLastName()).isEqualTo("Smith");
+        assertThat(object.getFirstName()).isEqualTo("John");
 
         // when
-        object.updateName("Bar");
+        object.updateName("Jones", "Chuck");
 
         // then
-        assertThat(object.getName()).isEqualTo("Bar");
+        assertThat(object.getLastName()).isEqualTo("Jones");
+        assertThat(object.getFirstName()).isEqualTo("Chuck");
     }
 
 }
