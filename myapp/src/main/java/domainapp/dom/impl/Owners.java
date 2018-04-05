@@ -35,24 +35,26 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 @DomainService(
         nature = NatureOfService.VIEW_MENU_ONLY,
-        objectType = "myapp.HelloWorldObjects"
+        objectType = "myapp.Owners"
 )
-public class HelloWorldObjects {
+public class Owners {
 
     @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
     @MemberOrder(sequence = "1")
-    public HelloWorldObject create(
+    public Owner create(
             @Parameter(maxLength = 40)
             @ParameterLayout(named = "Name")
             final String name) {
-        return repositoryService.persist(new HelloWorldObject(name));
+        return repositoryService.persist(new Owner(name));
     }
 
     @Action(semantics = SemanticsOf.SAFE)
     @MemberOrder(sequence = "2")
-    public List<HelloWorldObject> findByName(final String name) {
-        TypesafeQuery<HelloWorldObject> q = isisJdoSupport.newTypesafeQuery(HelloWorldObject.class);
-        final QHelloWorldObject cand = QHelloWorldObject.candidate();
+    public List<Owner> findByName(
+            @ParameterLayout(named = "Name")
+            final String name) {
+        TypesafeQuery<Owner> q = isisJdoSupport.newTypesafeQuery(Owner.class);
+        final QOwner cand = QOwner.candidate();
         q = q.filter(
                 cand.name.indexOf(q.stringParameter("name")).ne(-1)
         );
@@ -62,8 +64,8 @@ public class HelloWorldObjects {
 
     @Action(semantics = SemanticsOf.SAFE, restrictTo = RestrictTo.PROTOTYPING)
     @MemberOrder(sequence = "3")
-    public List<HelloWorldObject> listAll() {
-        return repositoryService.allInstances(HelloWorldObject.class);
+    public List<Owner> listAll() {
+        return repositoryService.allInstances(Owner.class);
     }
 
     @javax.inject.Inject

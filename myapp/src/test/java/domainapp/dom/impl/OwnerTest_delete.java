@@ -30,7 +30,7 @@ import org.apache.isis.core.unittestsupport.jmocking.JUnitRuleMockery2;
 
 import static org.hamcrest.CoreMatchers.containsString;
 
-public class HelloWorldObjectTest_delete {
+public class OwnerTest_delete {
 
     @Rule
     public JUnitRuleMockery2 context = JUnitRuleMockery2.createFor(JUnitRuleMockery2.Mode.INTERFACES_AND_CLASSES);
@@ -48,7 +48,7 @@ public class HelloWorldObjectTest_delete {
     public void happy_case() throws Exception {
 
         // given
-        final HelloWorldObject object = new HelloWorldObject("Foo");
+        final Owner object = new Owner("Foo");
         object.titleService = mockTitleService;
         object.messageService = mockMessageService;
         object.repositoryService = mockRepositoryService;

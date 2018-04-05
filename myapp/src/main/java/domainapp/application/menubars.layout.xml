@@ -20,15 +20,15 @@
 <mb3:menuBars xsi:schemaLocation="http://isis.apache.org/applib/layout/menubars/bootstrap3 http://isis.apache.org/applib/layout/menubars/bootstrap3/menubars.xsd http://isis.apache.org/applib/layout/component http://isis.apache.org/applib/layout/component/component.xsd http://isis.apache.org/applib/layout/links http://isis.apache.org/applib/layout/links/links.xsd" xmlns:cpt="http://isis.apache.org/applib/layout/component" xmlns:lnk="http://isis.apache.org/applib/layout/links" xmlns:mb3="http://isis.apache.org/applib/layout/menubars/bootstrap3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <mb3:primary>
         <mb3:menu>
-            <mb3:named>Hello World Objects</mb3:named>
+            <mb3:named>Owners</mb3:named>
             <mb3:section>
-                <mb3:serviceAction objectType="myapp.HelloWorldObjects" id="create">
+                <mb3:serviceAction objectType="myapp.Owners" id="create">
                     <cpt:named>Create</cpt:named>
                 </mb3:serviceAction>
-                <mb3:serviceAction objectType="myapp.HelloWorldObjects" id="findByName">
+                <mb3:serviceAction objectType="myapp.Owners" id="findByName">
                     <cpt:named>Find By Name</cpt:named>
                 </mb3:serviceAction>
-                <mb3:serviceAction objectType="myapp.HelloWorldObjects" id="listAll">
+                <mb3:serviceAction objectType="myapp.Owners" id="listAll">
                     <cpt:named>List All</cpt:named>
                 </mb3:serviceAction>
             </mb3:section>

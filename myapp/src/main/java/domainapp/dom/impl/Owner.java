@@ -43,12 +43,12 @@ import org.apache.isis.applib.services.title.TitleService;
 @javax.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE, schema = "myapp" )
 @javax.jdo.annotations.DatastoreIdentity(strategy = IdGeneratorStrategy.IDENTITY, column = "id")
 @javax.jdo.annotations.Version(strategy= VersionStrategy.DATE_TIME, column ="version")
-@javax.jdo.annotations.Unique(name="HelloWorldObject_name_UNQ", members = {"name"})
+@javax.jdo.annotations.Unique(name="Owner_name_UNQ", members = {"name"})
 @DomainObject(auditing = Auditing.ENABLED)
 @DomainObjectLayout()  // causes UI events to be triggered
-public class HelloWorldObject implements Comparable<HelloWorldObject> {
+public class Owner implements Comparable<Owner> {
 
-    public HelloWorldObject(final String name) {
+    public Owner(final String name) {
         this.name = name;
     }
 
@@ -67,7 +67,7 @@ public class HelloWorldObject implements Comparable<HelloWorldObject> {
 
 
     @Action(semantics = SemanticsOf.IDEMPOTENT, command = CommandReification.ENABLED, publishing = Publishing.ENABLED)
-    public HelloWorldObject updateName(
+    public Owner updateName(
             @Parameter(maxLength = 40)
             @ParameterLayout(named = "Name")
             final String name) {
@@ -92,7 +92,7 @@ public class HelloWorldObject implements Comparable<HelloWorldObject> {
     }
 
     @Override
-    public int compareTo(final HelloWorldObject other) {
+    public int compareTo(final Owner other) {
         return ComparisonChain.start()
                 .compare(this.getName(), other.getName())
                 .result();
