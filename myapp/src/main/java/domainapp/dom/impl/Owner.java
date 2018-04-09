@@ -42,7 +42,7 @@ import org.apache.isis.applib.services.title.TitleService;
 import lombok.Getter;
 import lombok.Setter;
 
-@javax.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE, schema = "myapp" )
+@javax.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE, schema = "pets" )
 @javax.jdo.annotations.DatastoreIdentity(strategy = IdGeneratorStrategy.IDENTITY, column = "id")
 @javax.jdo.annotations.Version(strategy= VersionStrategy.DATE_TIME, column ="version")
 @javax.jdo.annotations.Unique(name="Owner_lastName_firstName_UNQ", members = {"lastName", "firstName"})

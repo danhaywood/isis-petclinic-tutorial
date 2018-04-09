@@ -34,7 +34,7 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 
 @DomainService(
         nature = NatureOfService.VIEW_MENU_ONLY,
-        objectType = "myapp.Owners"
+        objectType = "pets.Owners"
 )
 public class Owners {
 
