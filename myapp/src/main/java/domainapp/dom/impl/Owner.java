@@ -34,7 +34,7 @@ import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
 import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.annotation.Title;
+import org.apache.isis.applib.annotation.Where;
 import org.apache.isis.applib.services.message.MessageService;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.services.title.TitleService;
@@ -59,13 +59,19 @@ public class Owner implements Comparable<Owner> {
         return getLastName() + ", " + getFirstName().substring(0,1);
     }
 
+
+    @Property(notPersisted = true)
+    public String getName() {
+        return getFirstName() + " " + getLastName();
+    }
+
     @javax.jdo.annotations.Column(allowsNull = "false", length = 40)
-    @Property
+    @Property(hidden = Where.EVERYWHERE)
     @Getter @Setter
     private String lastName;
 
     @javax.jdo.annotations.Column(allowsNull = "false", length = 40)
-    @Property
+    @Property(hidden = Where.EVERYWHERE)
     @Getter @Setter
     private String firstName;
 
