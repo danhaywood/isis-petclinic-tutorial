@@ -75,6 +75,25 @@ public class Owner implements Comparable<Owner> {
     @Getter @Setter
     private String firstName;
 
+    @javax.jdo.annotations.Column(allowsNull = "true", length = 15)
+    @Property(
+            editing = Editing.ENABLED,
+            regexPattern = "[+]?[0-9 ]+",
+            regexPatternReplacement =
+                "Specify only numbers and spaces, optionally prefixed with '+'.  " +
+                "For example, '+353 1 555 1234', or '07123 456789'"
+    )
+    @Getter @Setter
+    private String phoneNumber;
+
+    @javax.jdo.annotations.Column(allowsNull = "true", length = 50)
+    @Property(editing = Editing.ENABLED)
+    @Getter @Setter
+    private String emailAddress;
+    public String validateEmailAddress(String emailAddress) {
+        return emailAddress.contains("@") ? null : "Email address must contain a '@'";
+    }
+
     @javax.jdo.annotations.Column(allowsNull = "true", length = 4000)
     @Property(editing = Editing.ENABLED)
     @Getter @Setter

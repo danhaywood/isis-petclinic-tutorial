@@ -39,6 +39,24 @@
                                         <c:describedAs>Updates the object's name</c:describedAs>
                                     </c:action>
                                 </c:property>
+                            </c:fieldSet>
+                        </bs3:col>
+                    </bs3:row>
+                </bs3:tab>
+                <bs3:tab name="Contact Details">
+                    <bs3:row>
+                        <bs3:col span="12">
+                            <c:fieldSet name="Contact Details">
+                                <c:property id="emailAddress"/>
+                                <c:property id="phoneNumber"/>
+                            </c:fieldSet>
+                        </bs3:col>
+                    </bs3:row>
+                </bs3:tab>
+                <bs3:tab name="Notes">
+                    <bs3:row>
+                        <bs3:col span="12">
+                            <c:fieldSet name="Notes">
                                 <c:property id="notes" namedEscaped="true" multiLine="10" hidden="ALL_TABLES"/>
                             </c:fieldSet>
                         </bs3:col>
