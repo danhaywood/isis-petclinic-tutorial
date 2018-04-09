@@ -16,24 +16,10 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package domainapp.application;
+package domainapp.dom;
 
-import org.apache.isis.applib.AppManifestAbstract2;
+import org.apache.isis.applib.ModuleAbstract;
 
-import domainapp.dom.HelloWorldModule;
-
-/**
- * Bootstrap the application.
- */
-public class HelloWorldAppManifest extends AppManifestAbstract2 {
-
-    public static final Builder BUILDER = Builder
-            .forModule(new HelloWorldModule())
-            .withConfigurationPropertiesFile(HelloWorldAppManifest.class, "isis-non-changing.properties")
-            .withAuthMechanism("shiro");
-
-    public HelloWorldAppManifest() {
-        super(BUILDER);
-    }
+public class PetClinicModule extends ModuleAbstract {
 
 }

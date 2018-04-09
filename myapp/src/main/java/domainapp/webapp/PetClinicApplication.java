@@ -33,7 +33,7 @@ import de.agilecoders.wicket.core.settings.IBootstrapSettings;
 import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchTheme;
 import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchThemeProvider;
 
-public class HelloWorldApplication extends IsisWicketApplication {
+public class PetClinicApplication extends IsisWicketApplication {
 
     private static final long serialVersionUID = 1L;
 
@@ -52,12 +52,12 @@ public class HelloWorldApplication extends IsisWicketApplication {
         final Module overrides = new AbstractModule() {
             @Override
             protected void configure() {
-                bind(String.class).annotatedWith(Names.named("applicationName")).toInstance("Hello World App");
+                bind(String.class).annotatedWith(Names.named("applicationName")).toInstance("Pet Clinic App");
                 bind(String.class).annotatedWith(Names.named("applicationCss")).toInstance("css/application.css");
                 bind(String.class).annotatedWith(Names.named("applicationJs")).toInstance("scripts/application.js");
                 bind(String.class).annotatedWith(Names.named("welcomeMessage")).toInstance(readLines(getClass(), "welcome.html",
-                        "This is the hello world app"));
-                bind(String.class).annotatedWith(Names.named("aboutMessage")).toInstance("Hello World App");
+                        "This is the pet clinic app"));
+                bind(String.class).annotatedWith(Names.named("aboutMessage")).toInstance("Pet Clinic App");
                 bind(InputStream.class).annotatedWith(Names.named("metaInfManifest")).toProvider(
                         Providers.of(getServletContext().getResourceAsStream("/META-INF/MANIFEST.MF")));
             }
