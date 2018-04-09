@@ -34,8 +34,7 @@
                                 <c:action id="delete">
                                     <c:describedAs>Deletes this object from the persistent datastore</c:describedAs>
                                 </c:action>
-                                <c:property id="lastName" namedEscaped="true"/>
-                                <c:property id="firstName" namedEscaped="true">
+                                <c:property id="name" namedEscaped="true">
                                     <c:action id="updateName">
                                         <c:describedAs>Updates the object's name</c:describedAs>
                                     </c:action>
