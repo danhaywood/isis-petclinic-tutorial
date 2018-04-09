@@ -29,7 +29,7 @@
     <artifactId>myapp</artifactId>
     <version>1.0-SNAPSHOT</version>
 
-    <name>HelloWorld</name>
+    <name>PetClinic</name>
 
     <packaging>war</packaging>
 
