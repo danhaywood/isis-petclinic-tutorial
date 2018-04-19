@@ -135,6 +135,11 @@ public class Owner implements Comparable<Owner> {
         repositoryService.removeAndFlush(this);
     }
 
+    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
+    public Pet newPet(final String name, final PetSpecies petSpecies) {
+        return repositoryService.persist(new Pet(this, name, petSpecies));
+    }
+
     @Override
     public String toString() {
         return getLastName();
