@@ -18,17 +18,21 @@
  */
 package domainapp.dom.impl;
 
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
+import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.VersionStrategy;
 
 import com.google.common.collect.ComparisonChain;
 
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.Auditing;
+import org.apache.isis.applib.annotation.Collection;
 import org.apache.isis.applib.annotation.CommandReification;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
@@ -135,10 +139,27 @@ public class Owner implements Comparable<Owner> {
         repositoryService.removeAndFlush(this);
     }
 
-    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
+    @Action(
+            semantics = SemanticsOf.NON_IDEMPOTENT,
+            associateWith = "pets"
+    )
     public Pet newPet(final String name, final PetSpecies petSpecies) {
         return repositoryService.persist(new Pet(this, name, petSpecies));
     }
+
+    @Action(
+            semantics = SemanticsOf.NON_IDEMPOTENT,
+            associateWith = "pets", associateWithSequence = "2"
+    )
+    public Owner removePet(Pet pet) {
+        repositoryService.removeAndFlush(pet);
+        return this;
+    }
+
+    @Persistent(mappedBy = "owner", dependentElement = "true")
+    @Collection()
+    @Getter @Setter
+    private SortedSet<Pet> pets = new TreeSet<Pet>();
 
     @Override
     public String toString() {
