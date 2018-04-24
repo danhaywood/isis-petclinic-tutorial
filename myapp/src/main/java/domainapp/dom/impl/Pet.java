@@ -35,6 +35,7 @@ import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.services.clock.ClockService;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
 import lombok.Getter;
@@ -94,6 +95,14 @@ public class Pet implements Comparable<Pet> {
         return repositoryService.persist(new Visit(this, at, reason));
     }
 
+    public LocalDateTime default0BookVisit() {
+        return clockService.now()
+                .plusDays(1)
+                .toDateTimeAtStartOfDay()
+                .toLocalDateTime()
+                .plusHours(9);
+    }
+
     @Override
     public int compareTo(final Pet other) {
         return ComparisonChain.start()
@@ -105,5 +114,10 @@ public class Pet implements Comparable<Pet> {
     @javax.jdo.annotations.NotPersistent
     @javax.inject.Inject
     RepositoryService repositoryService;
+
+    @javax.jdo.annotations.NotPersistent
+    @javax.inject.Inject
+    ClockService clockService;
+
 
 }
