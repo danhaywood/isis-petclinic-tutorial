@@ -29,8 +29,7 @@ import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.services.clock.ClockService;
-import org.apache.isis.applib.services.repository.RepositoryService;
+import org.apache.isis.applib.services.eventbus.ObjectRemovingEvent;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -39,9 +38,14 @@ import lombok.Setter;
 @javax.jdo.annotations.DatastoreIdentity(strategy = IdGeneratorStrategy.IDENTITY, column = "id")
 @javax.jdo.annotations.Version(strategy= VersionStrategy.DATE_TIME, column ="version")
 @javax.jdo.annotations.Unique(name="Pet_owner_name_UNQ", members = {"owner","name"})
-@DomainObject(auditing = Auditing.ENABLED)
+@DomainObject(
+        auditing = Auditing.ENABLED,
+        removingLifecycleEvent = Pet.RemovingEvent.class
+)
 @DomainObjectLayout()  // causes UI events to be triggered
 public class Pet implements Comparable<Pet> {
+
+    public static class RemovingEvent extends ObjectRemovingEvent<Pet> {}
 
     public Pet(final Owner owner, final String name, final PetSpecies petSpecies) {
         this.owner = owner;
