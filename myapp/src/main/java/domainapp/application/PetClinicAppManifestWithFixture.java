@@ -20,7 +20,7 @@ package domainapp.application;
 
 import org.apache.isis.applib.AppManifestAbstract2;
 
-import domainapp.dom.impl.RecreateOwners;
+import domainapp.dom.impl.RecreateOwnersAndPets;
 
 /**
  * Bootstrap the application.
@@ -28,7 +28,7 @@ import domainapp.dom.impl.RecreateOwners;
 public class PetClinicAppManifestWithFixture extends AppManifestAbstract2 {
 
     public static final Builder BUILDER = PetClinicAppManifest.BUILDER
-                    .withFixtureScripts(RecreateOwners.class);
+                    .withFixtureScripts(RecreateOwnersAndPets.class);
 
     public PetClinicAppManifestWithFixture() {
         super(BUILDER);

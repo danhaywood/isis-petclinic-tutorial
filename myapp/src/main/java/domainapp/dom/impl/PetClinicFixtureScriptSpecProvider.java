@@ -10,7 +10,7 @@ public class PetClinicFixtureScriptSpecProvider implements FixtureScriptsSpecifi
     @Override
     public FixtureScriptsSpecification getSpecification() {
         return FixtureScriptsSpecification.builder(getClass())
-                .withRunScriptDefault(RecreateOwners.class)
+                .withRunScriptDefault(RecreateOwnersAndPets.class)
                 .build();
     }
 }
