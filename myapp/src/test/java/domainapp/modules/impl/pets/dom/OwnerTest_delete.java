@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package domainapp.dom.impl;
+package domainapp.modules.impl.pets.dom;
 
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;
@@ -28,6 +28,7 @@ import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.services.title.TitleService;
 import org.apache.isis.core.unittestsupport.jmocking.JUnitRuleMockery2;
 
+import domainapp.modules.impl.pets.dom.Owner;
 import static org.hamcrest.CoreMatchers.containsString;
 
 public class OwnerTest_delete {

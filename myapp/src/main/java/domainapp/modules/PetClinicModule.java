@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package domainapp.dom;
+package domainapp.modules;
 
 import org.apache.isis.applib.ModuleAbstract;
 

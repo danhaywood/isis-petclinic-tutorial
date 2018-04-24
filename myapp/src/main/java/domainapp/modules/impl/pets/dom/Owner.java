@@ -16,7 +16,7 @@
  *  specific language governing permissions and limitations
  *  under the License.
  */
-package domainapp.dom.impl;
+package domainapp.modules.impl.pets.dom;
 
 import java.util.SortedSet;
 import java.util.TreeSet;

@@ -1,4 +1,4 @@
-package domainapp.dom.impl;
+package domainapp.modules.impl.pets.dom;
 
 import org.jmock.Expectations;
 import org.jmock.auto.Mock;

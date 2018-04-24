@@ -1,4 +1,4 @@
-package domainapp.dom.impl;
+package domainapp.modules.impl.pets.dom;
 
 public enum PetSpecies {
     Dog,

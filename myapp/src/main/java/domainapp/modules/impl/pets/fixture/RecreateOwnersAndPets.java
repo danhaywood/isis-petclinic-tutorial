@@ -1,10 +1,14 @@
-package domainapp.dom.impl;
+package domainapp.modules.impl.pets.fixture;
 
 import javax.inject.Inject;
 
 import org.apache.isis.applib.fixturescripts.FixtureScript;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
+import domainapp.modules.impl.pets.dom.Owner;
+import domainapp.modules.impl.pets.dom.Owners;
+import domainapp.modules.impl.pets.dom.Pet;
+import domainapp.modules.impl.pets.dom.PetSpecies;
 import lombok.Data;
 
 public class RecreateOwnersAndPets extends FixtureScript {

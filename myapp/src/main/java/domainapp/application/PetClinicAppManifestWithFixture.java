@@ -20,7 +20,7 @@ package domainapp.application;
 
 import org.apache.isis.applib.AppManifestAbstract2;
 
-import domainapp.dom.impl.RecreateOwnersAndPets;
+import domainapp.modules.impl.pets.fixture.RecreateOwnersAndPets;
 
 /**
  * Bootstrap the application.

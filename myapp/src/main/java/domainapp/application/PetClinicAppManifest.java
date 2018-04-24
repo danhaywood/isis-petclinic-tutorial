@@ -20,7 +20,7 @@ package domainapp.application;
 
 import org.apache.isis.applib.AppManifestAbstract2;
 
-import domainapp.dom.PetClinicModule;
+import domainapp.modules.PetClinicModule;
 
 /**
  * Bootstrap the application.
