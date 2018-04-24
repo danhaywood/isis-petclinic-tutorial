@@ -21,11 +21,12 @@ public class Pet_bookVisit_Test {
     ClockService mockClockService;
 
     @Test
-    public void default0BookVisit() {
+    public void default0Act() {
 
         // given
         Pet pet = new Pet(null, null, null);
-        pet.clockService = mockClockService;
+        Pet_bookVisit mixin = new Pet_bookVisit(pet);
+        mixin.clockService = mockClockService;
 
         // expecting
         context.checking(new Expectations() {{
@@ -35,7 +36,7 @@ public class Pet_bookVisit_Test {
         }});
 
         // when
-        LocalDateTime actual = pet.default0BookVisit();
+        LocalDateTime actual = mixin.default0Act();
 
         // then
         assertThat(actual).isEqualTo(new LocalDateTime(2018,3,4,9,0));
