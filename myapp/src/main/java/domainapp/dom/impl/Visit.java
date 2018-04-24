@@ -26,84 +26,65 @@ import com.google.common.collect.ComparisonChain;
 
 import org.joda.time.LocalDateTime;
 
-import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.Auditing;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.Parameter;
-import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.SemanticsOf;
-import org.apache.isis.applib.services.repository.RepositoryService;
+import org.apache.isis.applib.annotation.PropertyLayout;
 
 import lombok.Getter;
 import lombok.Setter;
 
-@javax.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE, schema = "pets" )
+@javax.jdo.annotations.PersistenceCapable(identityType = IdentityType.DATASTORE, schema = "visits" )
 @javax.jdo.annotations.DatastoreIdentity(strategy = IdGeneratorStrategy.IDENTITY, column = "id")
 @javax.jdo.annotations.Version(strategy= VersionStrategy.DATE_TIME, column ="version")
-@javax.jdo.annotations.Unique(name="Pet_owner_name_UNQ", members = {"owner","name"})
+@javax.jdo.annotations.Unique(name="Visit_visitAt_pet_UNQ", members = {"visitAt","pet"})
+@javax.jdo.annotations.Index(name="Visit_pet_visitAt_IDX", members = {"pet","visitAt"})
 @DomainObject(auditing = Auditing.ENABLED)
 @DomainObjectLayout()  // causes UI events to be triggered
-public class Pet implements Comparable<Pet> {
+public class Visit implements Comparable<Visit> {
 
-    public Pet(final Owner owner, final String name, final PetSpecies petSpecies) {
-        this.owner = owner;
-        this.name = name;
-        this.petSpecies = petSpecies;
+    public Visit(final Pet pet, final LocalDateTime visitAt, final String reason) {
+        this.pet = pet;
+        this.visitAt = visitAt;
+        this.reason = reason;
     }
 
     public String title() {
         return String.format(
-                "%s (%s owned by %s)",
-                getName(), getPetSpecies().name().toLowerCase(), getOwner().getName());
+                "%s: %s (%s)",
+                getVisitAt().toString("yyyy-MM-dd hh:mm"),
+                getPet().getOwner().getName(),
+                getPet().getName());
     }
 
-    @javax.jdo.annotations.Column(allowsNull = "false", name = "ownerId")
+    @javax.jdo.annotations.Column(allowsNull = "false", name = "petId")
     @Property(editing = Editing.DISABLED)
     @Getter @Setter
-    private Owner owner;
-
-    @javax.jdo.annotations.Column(allowsNull = "false", length = 40)
-    @Property(editing = Editing.ENABLED)
-    @Getter @Setter
-    private String name;
+    private Pet pet;
 
     @javax.jdo.annotations.Column(allowsNull = "false")
     @Property(editing = Editing.DISABLED)
     @Getter @Setter
-    private PetSpecies petSpecies;
+    private LocalDateTime visitAt;
 
-    @javax.jdo.annotations.Column(allowsNull = "true", length = 4000)
+    @javax.jdo.annotations.Column(allowsNull = "false", length = 4000)
     @Property(editing = Editing.ENABLED)
+    @PropertyLayout(multiLine = 5)
     @Getter @Setter
-    private String notes;
+    private String reason;
 
     @Override
     public String toString() {
-        return getName();
-    }
-
-    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
-    public Visit bookVisit(
-            final LocalDateTime at,
-            @Parameter(maxLength = 4000)
-            @ParameterLayout(multiLine = 5)
-            final String reason) {
-        return repositoryService.persist(new Visit(this, at, reason));
+        return getVisitAt().toString("yyyy-MM-dd hh:mm");
     }
 
     @Override
-    public int compareTo(final Pet other) {
+    public int compareTo(final Visit other) {
         return ComparisonChain.start()
-                .compare(this.getOwner(), other.getOwner())
-                .compare(this.getName(), other.getName())
+                .compare(this.getVisitAt(), other.getVisitAt())
+                .compare(this.getPet(), other.getPet())
                 .result();
     }
-
-    @javax.jdo.annotations.NotPersistent
-    @javax.inject.Inject
-    RepositoryService repositoryService;
-
 }
