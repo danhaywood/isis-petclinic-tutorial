@@ -103,6 +103,12 @@ public class Pet implements Comparable<Pet> {
                 .plusHours(9);
     }
 
+    public String validate0BookVisit(final LocalDateTime proposed) {
+        return proposed.isBefore(clockService.nowAsLocalDateTime())
+                ? "Cannot enter date in the past"
+                : null;
+    }
+    
     @Override
     public int compareTo(final Pet other) {
         return ComparisonChain.start()
