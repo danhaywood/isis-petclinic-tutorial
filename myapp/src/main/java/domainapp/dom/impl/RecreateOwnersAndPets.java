@@ -7,9 +7,9 @@ import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
 import lombok.Data;
 
-public class RecreateOwners extends FixtureScript {
+public class RecreateOwnersAndPets extends FixtureScript {
 
-    public RecreateOwners() {
+    public RecreateOwnersAndPets() {
         super(null, null, Discoverability.DISCOVERABLE);
     }
 
