@@ -24,17 +24,11 @@ import javax.jdo.annotations.VersionStrategy;
 
 import com.google.common.collect.ComparisonChain;
 
-import org.joda.time.LocalDateTime;
-
-import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.Auditing;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
-import org.apache.isis.applib.annotation.Parameter;
-import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Property;
-import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.clock.ClockService;
 import org.apache.isis.applib.services.repository.RepositoryService;
 
@@ -87,29 +81,6 @@ public class Pet implements Comparable<Pet> {
         return getName();
     }
 
-    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
-    public Visit bookVisit(
-            final LocalDateTime at,
-            @Parameter(maxLength = 4000)
-            @ParameterLayout(multiLine = 5)
-            final String reason) {
-        return repositoryService.persist(new Visit(this, at, reason));
-    }
-
-    public LocalDateTime default0BookVisit() {
-        return clockService.now()
-                .plusDays(1)
-                .toDateTimeAtStartOfDay()
-                .toLocalDateTime()
-                .plusHours(9);
-    }
-
-    public String validate0BookVisit(final LocalDateTime proposed) {
-        return proposed.isBefore(clockService.nowAsLocalDateTime())
-                ? "Cannot enter date in the past"
-                : null;
-    }
-    
     @Override
     public int compareTo(final Pet other) {
         return ComparisonChain.start()
@@ -117,14 +88,6 @@ public class Pet implements Comparable<Pet> {
                 .compare(this.getName(), other.getName())
                 .result();
     }
-
-    @javax.jdo.annotations.NotPersistent
-    @javax.inject.Inject
-    RepositoryService repositoryService;
-
-    @javax.jdo.annotations.NotPersistent
-    @javax.inject.Inject
-    ClockService clockService;
 
 
 }
