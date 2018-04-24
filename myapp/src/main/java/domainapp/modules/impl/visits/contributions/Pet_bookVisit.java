@@ -3,6 +3,7 @@ package domainapp.modules.impl.visits.contributions;
 import org.joda.time.LocalDateTime;
 
 import org.apache.isis.applib.annotation.Action;
+import org.apache.isis.applib.annotation.ActionLayout;
 import org.apache.isis.applib.annotation.Mixin;
 import org.apache.isis.applib.annotation.Parameter;
 import org.apache.isis.applib.annotation.ParameterLayout;
@@ -17,12 +18,12 @@ import domainapp.modules.impl.visits.dom.Visit;
 public class Pet_bookVisit {
 
     private final Pet pet;
-
     public Pet_bookVisit(Pet pet) {
         this.pet = pet;
     }
 
-    @Action(semantics = SemanticsOf.NON_IDEMPOTENT)
+    @Action(semantics = SemanticsOf.NON_IDEMPOTENT, associateWith = "visits")
+    @ActionLayout(named = "Book")
     public Visit act(
             final LocalDateTime at,
             @Parameter(maxLength = 4000)
