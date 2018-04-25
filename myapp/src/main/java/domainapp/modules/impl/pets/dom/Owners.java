@@ -28,6 +28,7 @@ import org.apache.isis.applib.annotation.MemberOrder;
 import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Optionality;
 import org.apache.isis.applib.annotation.Parameter;
+import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.annotation.RestrictTo;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
@@ -70,6 +71,22 @@ public class Owners {
         );
         return q.setParameter("name", name)
                 .executeList();
+    }
+
+    @Programmatic
+    public Owner findByLastNameAndFirstName(
+            final String lastName,
+            final String firstName) {
+        TypesafeQuery<Owner> q = isisJdoSupport.newTypesafeQuery(Owner.class);
+        final domainapp.modules.impl.pets.dom.QOwner cand = domainapp.modules.impl.pets.dom.QOwner.candidate();
+        q = q.filter(
+                cand.lastName.eq(q.stringParameter("lastName")).and(
+                cand.firstName.eq(q.stringParameter("firstName"))
+                )
+        );
+        return q.setParameter("lastName", lastName)
+                .setParameter("firstName", firstName)
+                .executeUnique();
     }
 
     @Action(semantics = SemanticsOf.SAFE, restrictTo = RestrictTo.PROTOTYPING)
