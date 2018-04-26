@@ -19,7 +19,6 @@
 package domainapp.modules.impl.visits.integtests;
 
 import org.joda.time.LocalDateTime;
-import org.junit.Before;
 import org.junit.Test;
 
 import org.apache.isis.applib.services.wrapper.InvalidException;
@@ -27,22 +26,12 @@ import org.apache.isis.applib.services.wrapper.InvalidException;
 import domainapp.modules.impl.PetClinicModuleIntegTestAbstract;
 import domainapp.modules.impl.pets.dom.Owner;
 import domainapp.modules.impl.pets.dom.Pet;
-import domainapp.modules.impl.pets.fixture.DeleteAllOwnersAndPets;
 import domainapp.modules.impl.pets.fixture.Owner_enum;
 import domainapp.modules.impl.visits.contributions.Pet_bookVisit;
 import domainapp.modules.impl.visits.dom.Visit;
-import domainapp.modules.impl.visits.fixture.DeleteAllVisits;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class Pet_bookVisit_IntegTest extends PetClinicModuleIntegTestAbstract {
-
-    @Before
-    public void setUp() {
-        runFixtureScript(
-                new DeleteAllVisits(),
-                new DeleteAllOwnersAndPets()
-        );
-    }
 
     @Test
     public void happy_case() {

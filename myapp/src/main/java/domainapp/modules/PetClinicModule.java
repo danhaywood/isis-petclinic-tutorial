@@ -19,7 +19,26 @@
 package domainapp.modules;
 
 import org.apache.isis.applib.ModuleAbstract;
+import org.apache.isis.applib.fixturescripts.FixtureScript;
+
+import domainapp.modules.impl.pets.fixture.DeleteAllOwnersAndPets;
+import domainapp.modules.impl.visits.fixture.DeleteAllVisits;
 
 public class PetClinicModule extends ModuleAbstract {
 
+    @Override
+    public FixtureScript getRefDataSetupFixture() {
+        // nothing currently
+        return null;
+    }
+
+    @Override public FixtureScript getTeardownFixture() {
+        return new FixtureScript() {
+            @Override
+            protected void execute(final ExecutionContext ec) {
+                ec.executeChild(this, new DeleteAllVisits());
+                ec.executeChild(this, new DeleteAllOwnersAndPets());
+            }
+        };
+    }
 }
