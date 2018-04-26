@@ -31,7 +31,6 @@ import org.apache.isis.applib.annotation.Editing;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.services.eventbus.ObjectRemovingEvent;
 
-import domainapp.modules.impl.visits.dom.Visit;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -58,6 +57,10 @@ public class Pet implements Comparable<Pet> {
         return String.format(
                 "%s (%s owned by %s)",
                 getName(), getPetSpecies().name().toLowerCase(), getOwner().getName());
+    }
+
+    public String iconName() {
+        return getPetSpecies().name().toLowerCase();
     }
 
     @javax.jdo.annotations.Column(allowsNull = "false", name = "ownerId")
