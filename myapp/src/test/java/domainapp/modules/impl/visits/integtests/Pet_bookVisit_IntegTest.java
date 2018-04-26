@@ -23,12 +23,8 @@ import org.junit.Before;
 import org.junit.Test;
 
 import org.apache.isis.applib.services.wrapper.InvalidException;
-import org.apache.isis.core.integtestsupport.IntegrationTestAbstract3;
-import org.apache.isis.core.metamodel.deployment.DeploymentCategory;
-import org.apache.isis.core.metamodel.deployment.DeploymentCategoryProvider;
-import org.apache.isis.core.runtime.services.i18n.po.TranslationServicePo;
 
-import domainapp.modules.PetClinicModule;
+import domainapp.modules.impl.PetClinicModuleIntegTestAbstract;
 import domainapp.modules.impl.pets.dom.Owner;
 import domainapp.modules.impl.pets.dom.Pet;
 import domainapp.modules.impl.pets.fixture.DeleteAllOwnersAndPets;
@@ -36,23 +32,9 @@ import domainapp.modules.impl.pets.fixture.Owner_enum;
 import domainapp.modules.impl.visits.contributions.Pet_bookVisit;
 import domainapp.modules.impl.visits.dom.Visit;
 import domainapp.modules.impl.visits.fixture.DeleteAllVisits;
-import lombok.Getter;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class Pet_bookVisit_IntegTest extends IntegrationTestAbstract3 {
-
-    public Pet_bookVisit_IntegTest() {
-        super(new PetClinicModule()
-                // disable the TranslationServicePo domain service
-                .withAdditionalServices(DeploymentCategoryProviderForTesting.class)
-                .withConfigurationProperty(TranslationServicePo.KEY_PO_MODE, "write")
-        );
-    }
-
-    public static class DeploymentCategoryProviderForTesting implements DeploymentCategoryProvider {
-        @Getter
-        DeploymentCategory deploymentCategory = DeploymentCategory.PROTOTYPING;
-    }
+public class Pet_bookVisit_IntegTest extends PetClinicModuleIntegTestAbstract {
 
     @Before
     public void setUp() {
