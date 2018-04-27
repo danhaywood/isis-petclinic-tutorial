@@ -18,13 +18,25 @@
  */
 package domainapp.modules;
 
+import java.util.Set;
+
+import com.google.common.collect.Sets;
+
+import org.apache.isis.applib.Module;
 import org.apache.isis.applib.ModuleAbstract;
 import org.apache.isis.applib.fixturescripts.FixtureScript;
+
+import org.isisaddons.module.fakedata.FakeDataModule;
 
 import domainapp.modules.impl.pets.fixture.DeleteAllOwnersAndPets;
 import domainapp.modules.impl.visits.fixture.DeleteAllVisits;
 
 public class PetClinicModule extends ModuleAbstract {
+
+    @Override
+    public Set<Module> getDependencies() {
+        return Sets.newHashSet(new FakeDataModule());
+    }
 
     @Override
     public FixtureScript getRefDataSetupFixture() {

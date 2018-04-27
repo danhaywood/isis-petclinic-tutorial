@@ -35,6 +35,7 @@
 
     <properties>
         <isis.version>1.16.2</isis.version>
+        <incode-platform.version>1.16.2</incode-platform.version>
 
         <compiler-plugin.source>1.8</compiler-plugin.source>
         <compiler-plugin.target>1.8</compiler-plugin.target>
@@ -171,6 +172,12 @@
         <dependency>
             <groupId>org.hsqldb</groupId>
             <artifactId>hsqldb</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.isisaddons.module.fakedata</groupId>
+            <artifactId>isis-module-fakedata-dom</artifactId>
+            <version>${incode-platform.version}</version>
         </dependency>
 
         <dependency>
