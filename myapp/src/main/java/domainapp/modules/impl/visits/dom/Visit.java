@@ -18,6 +18,8 @@
  */
 package domainapp.modules.impl.visits.dom;
 
+import java.math.BigDecimal;
+
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
@@ -26,12 +28,16 @@ import com.google.common.collect.ComparisonChain;
 
 import org.joda.time.LocalDateTime;
 
+import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.Auditing;
 import org.apache.isis.applib.annotation.DomainObject;
 import org.apache.isis.applib.annotation.DomainObjectLayout;
 import org.apache.isis.applib.annotation.Editing;
+import org.apache.isis.applib.annotation.Parameter;
+import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
+import org.apache.isis.applib.annotation.SemanticsOf;
 
 import domainapp.modules.impl.pets.dom.Pet;
 import lombok.Getter;
@@ -76,6 +82,28 @@ public class Visit implements Comparable<Visit> {
     @Getter @Setter
     private String reason;
 
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    public Visit enterOutcome(
+            @Parameter(maxLength = 4000)
+            @ParameterLayout(multiLine = 5)
+            final String diagnosis,
+            final BigDecimal cost) {
+        this.diagnosis = diagnosis;
+        this.cost = cost;
+        return this;
+    }
+
+    @javax.jdo.annotations.Column(allowsNull = "true", length = 4000)
+    @Property(editing = Editing.DISABLED, editingDisabledReason = "Use 'enter outcome' action")
+    @PropertyLayout(multiLine = 5)
+    @Getter @Setter
+    private String diagnosis;
+
+    @javax.jdo.annotations.Column(allowsNull = "true", length = 6, scale = 2)
+    @Property(editing = Editing.DISABLED, editingDisabledReason = "Use 'enter outcome' action")
+    @Getter @Setter
+    private BigDecimal cost;
+
     @Override
     public String toString() {
         return getVisitAt().toString("yyyy-MM-dd hh:mm");
@@ -88,4 +116,5 @@ public class Visit implements Comparable<Visit> {
                 .compare(this.getPet(), other.getPet())
                 .result();
     }
+
 }
