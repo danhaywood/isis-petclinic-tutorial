@@ -113,6 +113,10 @@ public class Visit implements Comparable<Visit> {
         return this;
     }
 
+    public String disablePaid() {
+        return getPaidOn() != null ? "Already paid": null;
+    }
+
     @javax.jdo.annotations.Column(allowsNull = "true")
     @Property(editing = Editing.DISABLED, editingDisabledReason = "Use 'paid on' action")
     @Getter @Setter
