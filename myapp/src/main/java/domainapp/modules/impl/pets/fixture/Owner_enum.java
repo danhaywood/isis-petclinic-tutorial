@@ -18,14 +18,14 @@ public enum Owner_enum
                    PersonaWithFinder<Owner> {
 
     JOHN_SMITH("John", "Smith", null, new PetData[]{
-            new PetData("Rover", PetSpecies.Dog)
+            new PetData("Rover", PetSpecies.Dog, 3)
     }),
     MARY_JONES("Mary","Jones", "+353 1 555 1234", new PetData[] {
-            new PetData("Tiddles", PetSpecies.Cat),
-            new PetData("Harry", PetSpecies.Budgerigar)
+            new PetData("Tiddles", PetSpecies.Cat, 1),
+            new PetData("Harry", PetSpecies.Budgerigar, 2)
     }),
     FRED_HUGHES("Fred","Hughes", "07777 987654", new PetData[] {
-            new PetData("Jemima", PetSpecies.Hamster)
+            new PetData("Jemima", PetSpecies.Hamster, 0)
     });
 
     private final String firstName;
