@@ -1,5 +1,7 @@
 package domainapp.modules.impl.visits.dom;
 
+import java.time.LocalDateTime;
+
 import org.datanucleus.query.typesafe.TypesafeQuery;
 
 import org.apache.isis.applib.annotation.DomainService;
@@ -13,7 +15,7 @@ import domainapp.modules.impl.pets.dom.Pet;
 public class Visits {
 
     @Programmatic
-    public java.util.Collection<Visit> findByPet(Pet pet) {
+    public java.util.List<Visit> findByPet(Pet pet) {
         TypesafeQuery<Visit> q = isisJdoSupport.newTypesafeQuery(Visit.class);
         final domainapp.modules.impl.visits.dom.QVisit cand = domainapp.modules.impl.visits.dom.QVisit.candidate();
         q = q.filter(
@@ -21,6 +23,18 @@ public class Visits {
             )
         );
         return q.setParameter("pet", pet)
+                .executeList();
+    }
+
+    @Programmatic
+    public java.util.List<Visit> findNotPaid() {
+        TypesafeQuery<Visit> q = isisJdoSupport.newTypesafeQuery(Visit.class);
+        final domainapp.modules.impl.visits.dom.QVisit cand = domainapp.modules.impl.visits.dom.QVisit.candidate();
+        q = q.filter(
+                cand.paidOn.eq(q.parameter("paidOn", LocalDateTime.class)
+            )
+        );
+        return q.setParameter("paidOn", null)
                 .executeList();
     }
 

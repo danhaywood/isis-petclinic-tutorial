@@ -19,6 +19,7 @@ import domainapp.modules.impl.pets.dom.Owners;
 import domainapp.modules.impl.pets.dom.Pet;
 import domainapp.modules.impl.pets.dom.PetSpecies;
 import domainapp.modules.impl.visits.contributions.Pet_bookVisit;
+import domainapp.modules.impl.visits.dom.Visit;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -65,7 +66,11 @@ public class OwnerBuilderScript extends BuilderScriptAbstract<Owner, OwnerBuilde
                     LocalDateTime someTimeInPast = someRandomTimeInPast();
                     String someReason = someReason();
                     setTimeTo(ec, someTimeInPast);
-                    wrap(mixin(Pet_bookVisit.class, pet)).act(someTimeInPast.plusDays(3), someReason);
+                    Visit visit = wrap(mixin(Pet_bookVisit.class, pet)).act(someTimeInPast.plusDays(3), someReason);
+                    if(i != petDatum.numberOfVisits - 1) {
+                        setTimeTo(ec, someTimeInPast.plusDays(fakeDataService.ints().between(10,30)));
+                        wrap(visit).paid();
+                    }
                 }
             }
         } finally {

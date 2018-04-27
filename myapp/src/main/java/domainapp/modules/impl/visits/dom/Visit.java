@@ -20,12 +20,14 @@ package domainapp.modules.impl.visits.dom;
 
 import java.math.BigDecimal;
 
+import javax.inject.Inject;
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.VersionStrategy;
 
 import com.google.common.collect.ComparisonChain;
 
+import org.joda.time.LocalDate;
 import org.joda.time.LocalDateTime;
 
 import org.apache.isis.applib.annotation.Action;
@@ -38,6 +40,7 @@ import org.apache.isis.applib.annotation.ParameterLayout;
 import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.PropertyLayout;
 import org.apache.isis.applib.annotation.SemanticsOf;
+import org.apache.isis.applib.services.clock.ClockService;
 
 import domainapp.modules.impl.pets.dom.Pet;
 import lombok.Getter;
@@ -104,6 +107,17 @@ public class Visit implements Comparable<Visit> {
     @Getter @Setter
     private BigDecimal cost;
 
+    @Action(semantics = SemanticsOf.IDEMPOTENT)
+    public Visit paid() {
+        paidOn = clockService.now();
+        return this;
+    }
+
+    @javax.jdo.annotations.Column(allowsNull = "true")
+    @Property(editing = Editing.DISABLED, editingDisabledReason = "Use 'paid on' action")
+    @Getter @Setter
+    private LocalDate paidOn;
+
     @Override
     public String toString() {
         return getVisitAt().toString("yyyy-MM-dd hh:mm");
@@ -116,5 +130,8 @@ public class Visit implements Comparable<Visit> {
                 .compare(this.getPet(), other.getPet())
                 .result();
     }
+
+    @Inject
+    ClockService clockService;
 
 }
