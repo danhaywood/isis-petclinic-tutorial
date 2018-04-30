@@ -1,5 +1,6 @@
 package domainapp.modules.impl.pets.fixture;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -67,6 +68,7 @@ public class OwnerBuilderScript extends BuilderScriptAbstract<Owner, OwnerBuilde
                     String someReason = someReason();
                     setTimeTo(ec, someTimeInPast);
                     Visit visit = wrap(mixin(Pet_bookVisit.class, pet)).act(someTimeInPast.plusDays(3), someReason);
+                    wrap(visit).enterOutcome(someDiagnosis(), someCost());
                     if(i != petDatum.numberOfVisits - 1) {
                         setTimeTo(ec, someTimeInPast.plusDays(fakeDataService.ints().between(10,30)));
                         wrap(visit).paid();
@@ -82,6 +84,14 @@ public class OwnerBuilderScript extends BuilderScriptAbstract<Owner, OwnerBuilde
 
     private String someReason() {
         return fakeDataService.lorem().paragraph(fakeDataService.ints().between(1, 3));
+    }
+
+    private String someDiagnosis() {
+        return fakeDataService.lorem().paragraph(fakeDataService.ints().between(1, 3));
+    }
+
+    private BigDecimal someCost() {
+        return new BigDecimal(20.00 + fakeDataService.doubles().upTo(30.00d));
     }
 
     private LocalDateTime someRandomTimeInPast() {
