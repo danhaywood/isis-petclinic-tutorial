@@ -8,9 +8,12 @@ import org.joda.time.LocalDateTime;
 import org.apache.isis.applib.annotation.Action;
 import org.apache.isis.applib.annotation.CollectionLayout;
 import org.apache.isis.applib.annotation.DomainObject;
+import org.apache.isis.applib.annotation.DomainService;
 import org.apache.isis.applib.annotation.Nature;
+import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.services.clock.ClockService;
+import org.apache.isis.applib.services.tablecol.TableColumnOrderService;
 
 import domainapp.modules.impl.pets.dom.Owner;
 import domainapp.modules.impl.pets.dom.Owners;
@@ -47,6 +50,22 @@ public class Dashboard {
             }
         }
         return this;
+    }
+
+
+    @DomainService(nature = NatureOfService.DOMAIN)
+    public static class RemovePaidOnFromOverdue extends TableColumnOrderService.Default {
+        @Override
+        public List<String> orderParented(
+                final Object parent,
+                final String collectionId,
+                final Class<?> collectionType,
+                final List<String> propertyIds) {
+            if (parent instanceof Dashboard && "overdue".equalsIgnoreCase(collectionId)) {
+                propertyIds.remove("paidOn");
+            }
+            return propertyIds;
+        }
     }
 
     @javax.inject.Inject
