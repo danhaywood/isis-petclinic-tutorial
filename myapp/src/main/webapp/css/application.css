@@ -17,3 +17,6 @@
  *  under the License.
  */
 
+.domainapp-modules-impl-dashboard-Dashboard .entityCollection .overdue .Visit-reason {
+    display: none;
+}
