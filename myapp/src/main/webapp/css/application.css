@@ -20,3 +20,7 @@
 .domainapp-modules-impl-dashboard-Dashboard .entityCollection .overdue .Visit-reason {
     display: none;
 }
+.entityCollection .domainapp-modules-impl-visits-dom-Visit .paid {
+    text-decoration: line-through;
+    color: lightgrey;
+}

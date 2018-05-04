@@ -69,6 +69,11 @@ public class Visit implements Comparable<Visit> {
                 getPet().getName());
     }
 
+    public String cssClass() {
+        boolean isPaid = getPaidOn() != null;
+        return isPaid ? "paid": null;
+    }
+
     @javax.jdo.annotations.Column(allowsNull = "false", name = "petId")
     @Property(editing = Editing.DISABLED)
     @Getter @Setter
