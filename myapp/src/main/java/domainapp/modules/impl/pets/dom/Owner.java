@@ -42,6 +42,7 @@ import org.apache.isis.applib.annotation.Property;
 import org.apache.isis.applib.annotation.Publishing;
 import org.apache.isis.applib.annotation.SemanticsOf;
 import org.apache.isis.applib.annotation.Where;
+import org.apache.isis.applib.services.eventbus.ActionDomainEvent;
 import org.apache.isis.applib.services.message.MessageService;
 import org.apache.isis.applib.services.repository.RepositoryService;
 import org.apache.isis.applib.services.title.TitleService;
@@ -131,8 +132,12 @@ public class Owner implements Comparable<Owner> {
         return getFirstName();
     }
 
+    public static class Delete extends ActionDomainEvent<Owner> {}
 
-    @Action(semantics = SemanticsOf.NON_IDEMPOTENT_ARE_YOU_SURE)
+    @Action(
+            semantics = SemanticsOf.NON_IDEMPOTENT,
+            domainEvent = Delete.class
+    )
     public void delete() {
         final String title = titleService.titleOf(this);
         messageService.informUser(String.format("'%s' deleted", title));

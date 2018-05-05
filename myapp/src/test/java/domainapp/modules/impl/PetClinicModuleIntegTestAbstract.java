@@ -32,6 +32,7 @@ public abstract class PetClinicModuleIntegTestAbstract extends IntegrationTestAb
         super(new PetClinicModule()
                 // disable the TranslationServicePo domain service
                 .withAdditionalServices(DeploymentCategoryProviderForTesting.class)
+                .withConfigurationProperty("isis.services.eventbus.implementation","axon")
                 .withConfigurationProperty(TranslationServicePo.KEY_PO_MODE, "write")
         );
     }

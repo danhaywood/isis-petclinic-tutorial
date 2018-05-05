@@ -9,6 +9,7 @@ import org.apache.isis.applib.annotation.NatureOfService;
 import org.apache.isis.applib.annotation.Programmatic;
 import org.apache.isis.applib.services.jdosupport.IsisJdoSupport;
 
+import domainapp.modules.impl.pets.dom.Owner;
 import domainapp.modules.impl.pets.dom.Pet;
 
 @DomainService(nature = NatureOfService.DOMAIN)
@@ -35,6 +36,21 @@ public class Visits {
             )
         );
         return q.setParameter("paidOn", null)
+                .executeList();
+    }
+
+    @Programmatic
+    public java.util.List<Visit> findNotPaidBy(Owner owner) {
+        TypesafeQuery<Visit> q = isisJdoSupport.newTypesafeQuery(Visit.class);
+        final domainapp.modules.impl.visits.dom.QVisit cand = domainapp.modules.impl.visits.dom.QVisit.candidate();
+        q = q.filter(
+                cand.paidOn.eq(q.parameter("paidOn", LocalDateTime.class)
+            ).and(
+                    cand.pet.owner.eq(q.parameter("owner", Owner.class))
+                )
+        );
+        return q.setParameter("paidOn", null)
+                .setParameter("owner", owner)
                 .executeList();
     }
 
