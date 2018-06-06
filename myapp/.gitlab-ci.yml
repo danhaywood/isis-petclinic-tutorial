@@ -1,0 +1,54 @@
+#
+# requires the following gitlab secret variables
+# - DOCKER_REGISTRY_USERNAME    # will be the owner of the uploaded Docker image
+# - DOCKER_REGISTRY_PASSWORD    # corresponding password
+# - DOCKER_REGISTRY_EMAIL
+# - DOCKER_REGISTRY_NAME        # eg "docker-dev.incode.cloud"
+# - DOCKER_REGISTRY_URL         # eg "https://repo.incode.cloud/repository/docker-dev/"
+#
+
+image: maven:3.5.3-jdk-8
+
+before_script:
+  - export APP_REVISION=$(date +%Y%m%d.%H%M).$CI_COMMIT_REF_SLUG.$(echo $CI_COMMIT_SHA | cut -c1-8)
+
+services:
+  - docker:dind
+
+variables:
+  DOCKER_HOST: tcp://docker:2375
+  DOCKER_DRIVER: overlay2
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2/repository -Dskip.cloudbees-estatio-repositories -Dskip.sonatype-snapshots -Dskip.apache-snapshots"
+  APP_NAME: bimtag-app-prototype
+
+stages:
+  - build-package-push
+
+build-package-push:
+  stage: build-package-push
+  script:
+    - git submodule sync
+    - git submodule update --init isis
+    - git submodule update --init incode-platform
+    - echo "APP_REVISION=$APP_REVISION"
+    - >
+      mvn --batch-mode \
+          install \
+          -DappRevision=$APP_REVISION \
+          -DskipTests \
+          -Dall \
+          -Dmavenmixin-docker \
+          -Ddocker-plugin.imageName=$DOCKER_REGISTRY_NAME/$DOCKER_REGISTRY_USERNAME/$APP_NAME
+    - >
+      mvn -s .m2/settings.xml \
+          --batch-mode \
+          docker:push@push-image-tagged \
+          -pl backend \
+          -DappRevision=$APP_REVISION \
+          -DskipTests \
+          -Dskip.isis-swagger \
+          -Dmavenmixin-docker \
+          -Ddocker-plugin.imageName=$DOCKER_REGISTRY_NAME/$DOCKER_REGISTRY_USERNAME/$APP_NAME \
+          -Ddocker-plugin.serverId=docker-registry \
+          -Ddocker.registryUrl=$DOCKER_REGISTRY_URL
+

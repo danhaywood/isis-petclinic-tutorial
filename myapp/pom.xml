@@ -27,13 +27,14 @@
 
     <groupId>com.mycompany</groupId>
     <artifactId>myapp</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>${appRevision}</version>
 
     <name>PetClinic</name>
 
     <packaging>war</packaging>
 
     <properties>
+        <appRevision>1.0-SNAPSHOT</appRevision>
         <isis.version>1.16.2</isis.version>
         <incode-platform.version>1.16.2</incode-platform.version>
 
@@ -45,11 +46,17 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <maven-war-plugin.warName>${project.artifactId}</maven-war-plugin.warName>
+        <docker-plugin.resource.include>${maven-war-plugin.warName}.war</docker-plugin.resource.include>
     </properties>
 
     <build>
         <resources>
             <resource>
+                <filtering>true</filtering>
+                <directory>src/main/resources</directory>
+            </resource>
+            <resource>
+                <filtering>false</filtering>
                 <directory>src/main/java</directory>
                 <includes>
                     <include>**</include>
@@ -82,6 +89,10 @@
                         <mixin>
                             <groupId>com.danhaywood.mavenmixin</groupId>
                             <artifactId>jettywar</artifactId>
+                        </mixin>
+                        <mixin>
+                            <groupId>com.danhaywood.mavenmixin</groupId>
+                            <artifactId>docker</artifactId>
                         </mixin>
                     </mixins>
                 </configuration>
